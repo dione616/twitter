@@ -4,11 +4,13 @@ import axios, { AxiosResponse } from "axios";
 const Home = () => {
   const [state, setState] = useState("Hello World");
   useEffect(() => {
-    const res = axios.get(`/home`).then((data: AxiosResponse) => {
-      console.log(data);
-      setState(data.data);
-      return data;
-    });
+    const res = axios
+      .get(`/home?email=veta@gmail.com&pass=password123`)
+      .then((data: AxiosResponse) => {
+        console.log(data);
+        setState(data.data);
+        return data;
+      });
     return () => {};
   }, []);
   return (
