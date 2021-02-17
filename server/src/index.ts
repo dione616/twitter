@@ -3,23 +3,33 @@ import colors from "colors";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { requireLogin } from "./middleware";
-import router from "./routes/login-route";
+import loginRoute from "./routes/login-route";
+import registerRoute from "./routes/register-route";
+var bodyParser = require("body-parser");
 
 const app = express();
 const PORT = 3003;
 
-const loginRoute = router;
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
 
 app.use(cors({ origin: `http://localhost:3000`, optionsSuccessStatus: 200 }));
 app.use(cookieParser());
+
 app.use(loginRoute);
+app.use(registerRoute);
 
-/* app.get("/home", requireLogin, (_req, res) => {
-  res.status(200).send(`Home page`);
+/* app.post(`/register`, (req, res) => {
+  console.log(req.body);
+  res.status(200).send(`Register page y`);
 });
-
-app.get("/list", (_req, res) => {
-  res.status(200).send(`List page`);
+app.get(`/register`, (req, res) => {
+  console.log(req.body);
+  res.status(200).send(`Register page y`);
 }); */
 
 const server = app.listen(PORT, () => {
