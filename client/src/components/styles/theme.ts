@@ -1,4 +1,4 @@
-import styled, { css, DefaultTheme } from "styled-components";
+import { css, DefaultTheme } from "styled-components";
 
 export const templates = {
   centerContent: css`

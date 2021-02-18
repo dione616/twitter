@@ -1,16 +1,8 @@
-import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Tweets = () => {
-  const [state, setState] = useState("Hi List!");
-  useEffect(() => {
-    const res = axios.get(`/list`).then((data: AxiosResponse) => {
-      console.log(data);
-      setState(data.data);
-      return data;
-    });
-    return () => {};
-  }, []);
+  const [state] = useState("Hi List!");
+
   return (
     <div>
       <h1>Tweets</h1>

@@ -1,6 +1,9 @@
+require("dotenv").config();
 import express from "express";
 import { User } from "../schemas/UserSchema";
 var bodyParser = require("body-parser");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 const app = express();
 
 const registerRoute = express.Router();
@@ -14,9 +17,9 @@ app.use(bodyParser.json());
 registerRoute.get(`/register`, (_req, res) => {
   res.status(200).send(`Register page y`);
 });
+
 registerRoute.post(`/register`, async (req, res) => {
   console.log(req.body);
-  console.log(`Iam here 1`);
   const firstname = req.body.firstname.trim();
   const lastname = req.body.lastname.trim();
   const email = req.body.email.trim();
@@ -26,7 +29,6 @@ registerRoute.post(`/register`, async (req, res) => {
   if (firstname && lastname && email && password && repeat_password) {
     const user = await User.findOne({ email }).catch((err) => {
       console.log(err);
-      console.log(`Iam here 2`);
       res
         .status(200)
         .send({ success: false, error: "Something wrong with DB" });
@@ -39,20 +41,32 @@ registerRoute.post(`/register`, async (req, res) => {
         res.status(200).send({ success: false, error: "Email exists" });
       }
     } else {
-      console.log(`Iam here 4`);
+      const token = jwt.sign(
+        { email, password },
+        `${process.env.TOKEN_SECRET}`
+      );
+
       const userToCreate = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password,
+        email:
+          req.body.email /* ,
+        
+        password: req.body.password, */,
+        token,
       };
 
-      User.create(userToCreate).then((user) => {
-        console.log(user);
-        createdUser = user;
+      /* userToCreate.password = await bcrypt.hash(password, 10); */
+
+      console.log(token);
+
+      const dbResponse = await User.create(userToCreate).then((user) => {
+        return user;
       });
-      console.log(`Iam here 5`);
-      res.status(200).send({ success: true });
+
+      console.log(dbResponse);
+
+      res.status(200).send({ success: true, response: dbResponse });
     }
   }
 });

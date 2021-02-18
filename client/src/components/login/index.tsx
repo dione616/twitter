@@ -1,25 +1,17 @@
 import React, { useState } from "react";
-import {
-  LoginTitle,
-  Wrapper,
-  LoginCard,
-  Input,
-  Circle,
-  TextLink,
-} from "./styles";
+import { LoginTitle, Wrapper, LoginCard, Circle, TextLink } from "./styles";
 import { SubmitButton } from "../button/submit/styles";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import ValidationError from "../generic/error";
-import Success from "../generic/succeess";
 
 const Login = () => {
-  const [state, setState] = useState({
+  const [state] = useState({
     email: "",
     password: "",
   });
-  const [res, setRes] = useState();
+  const [, setRes] = useState();
 
   const sendData = async (data: typeof state) => {
     const response = await axios.post(`/login`, data).then((res) => {
@@ -48,11 +40,9 @@ const Login = () => {
             console.log(values, actions);
 
             sendData(values);
-
-            //redirect
           }}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched }) => (
             <Form style={{ width: "100%", zIndex: 2 }}>
               <Field
                 className="input-field"
@@ -75,7 +65,7 @@ const Login = () => {
 
               <SubmitButton
                 disabled={errors.email ? true : false}
-                onClick={(e) => {
+                onClick={() => {
                   /* setTimeout(() => {
                     
                   }, 3000); */

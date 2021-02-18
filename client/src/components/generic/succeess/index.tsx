@@ -1,8 +1,7 @@
-import React from "react";
 interface IProps {
   label: string;
 }
-const Success = ({ label }: IProps) => {
+const Success: React.FC<IProps> = ({ label }) => {
   return <h3 style={{ color: "green" }}>{label}</h3>;
 };
 

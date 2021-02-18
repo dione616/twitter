@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useState } from "react";
 
 const Home = () => {
-  const [state, setState] = useState("Hello World");
-  useEffect(() => {
-    const res = axios.get(`/home`).then((data: AxiosResponse) => {
-      console.log(data);
-      setState(data.data);
-      return data;
-    });
-    return () => {};
-  }, []);
+  const [state] = useState("Hello World");
+
   return (
     <div>
       <h1>Home</h1>

@@ -1,29 +1,18 @@
-import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps,
-  useField,
-} from "formik";
+import axios from "axios";
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Wrapper, Input, Circle, TextLink } from "./styles";
+import { Wrapper, Circle, TextLink } from "./styles";
 import { SubmitButton } from "../button/submit/styles";
 import { LoginCard, LoginTitle } from "../login/styles";
 import ValidationError from "../generic/error";
-import { TextInput } from "../generic/input/text";
-import Success from "../generic/succeess";
-import { boolean } from "yup/lib/locale";
 
-interface IRes {
-  response: undefined | boolean;
-}
+import Success from "../generic/succeess";
+
+import { Redirect } from "react-router-dom";
 
 const Register = () => {
-  const [state, setState] = useState({
+  const [state] = useState({
     firstname: "",
     lastname: "",
     email: "",
@@ -41,16 +30,15 @@ const Register = () => {
     setRes(response);
   };
 
-  const showResponse = (success: boolean) => {
-    return success ? (
-      <Success label="You have successfully registered!" />
-    ) : (
-      <ValidationError />
-    );
+  const registerSuccess = () => {
+    if (res) {
+      return <Redirect to="/" />;
+    }
   };
 
   return (
     <Wrapper>
+      {registerSuccess()}
       <LoginCard>
         <LoginTitle>Register</LoginTitle>
 
@@ -93,7 +81,7 @@ const Register = () => {
             }, 3000);
           }}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched }) => (
             <Form style={{ width: "100%", zIndex: 2 }}>
               <Field
                 placeholder="Firstname"
@@ -148,7 +136,7 @@ const Register = () => {
                     ? true
                     : false
                 }
-                onClick={(e) => {
+                onClick={() => {
                   /* setTimeout(() => {
                     
                   }, 3000); */
