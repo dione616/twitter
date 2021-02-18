@@ -5,7 +5,14 @@ import cookieParser from "cookie-parser";
 import { requireLogin } from "./middleware";
 import loginRoute from "./routes/login-route";
 import registerRoute from "./routes/register-route";
+import mongoose from "mongoose";
+import { connectDatabase } from "./database";
 var bodyParser = require("body-parser");
+
+const DB_USER = "user_001";
+const DB_PASSWORD = "GB9lsFIYkMMr4tGF";
+
+const connect = connectDatabase();
 
 const app = express();
 const PORT = 3003;
