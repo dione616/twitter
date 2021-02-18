@@ -8,6 +8,7 @@ body {
 
   box-sizing: border-box;
   color: rgb(67, 67, 67);
+  overflow: hidden;
 }
 
 code {
@@ -21,4 +22,11 @@ code {
   margin: 20px 0;
   border: 1px solid black;
   background: #ffffff8c;
+}
+.waves {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  height: 10vw;
+  transform: scaleX(2.3);
 }

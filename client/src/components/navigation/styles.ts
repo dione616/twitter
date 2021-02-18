@@ -8,7 +8,7 @@ export const NavWrapper = styled.div`
   height: 50px;
   align-items: center;
   justify-content: flex-end;
-  background: #007cb0de;
+  background: linear-gradient(90deg, #937ff0, #fc84ba);
   color: white;
   ${({ theme }) => theme.fonts.font1};
 

@@ -2,18 +2,20 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.templates.centerContent};
+  z-index: 2;
 
   box-sizing: border-box;
 `;
 export const LoginCard = styled.div`
   ${({ theme }) => theme.templates.centerContent};
   padding: 20px;
-  background: linear-gradient(99deg, hsl(52, 0%, 100%), hsl(52, 0%, 100%));
+  background: linear-gradient(90deg, #937ff0, #fc84ba);
   margin: 10px;
   border-radius: 5px;
   width: 300px;
   position: relative;
   overflow: hidden;
+  box-shadow: 5px 6px 12px 0px #000000;
 `;
 export const LoginTitle = styled.h1`
   z-index: 2;

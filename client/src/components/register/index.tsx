@@ -10,9 +10,9 @@ import {
   useField,
 } from "formik";
 import * as Yup from "yup";
-import { Wrapper, LoginCard, Input, Circle, TextLink } from "./styles";
+import { Wrapper, Input, Circle, TextLink } from "./styles";
 import { SubmitButton } from "../button/submit/styles";
-import { LoginTitle } from "../login/styles";
+import { LoginCard, LoginTitle } from "../login/styles";
 import ValidationError from "../generic/error";
 import { TextInput } from "../generic/input/text";
 import Success from "../generic/succeess";
@@ -161,9 +161,9 @@ const Register = () => {
           )}
         </Formik>
         {res ? <Success label="Successfully" /> : <ValidationError />}
-        <Circle size={150} top={55} left={65} color="#50d4fc" />
-        <Circle size={60} top={28} left={48} color="#2fc8f7" />
-        <Circle size={20} top={5} left={75} color="#50d4fc" />
+        <Circle size={150} top={80} left={65} color="#007cb0de" />
+        <Circle size={60} top={28} left={48} color="#007cb0de" />
+        <Circle size={20} top={5} left={75} color="#007cb0de" />
         <TextLink href="/login">Already have one?Login here.</TextLink>
       </LoginCard>
     </Wrapper>

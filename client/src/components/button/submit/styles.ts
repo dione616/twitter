@@ -3,7 +3,7 @@ export const SubmitButton = styled.button`
   padding: 5px;
   outline: none;
   width: 100%;
-  background: #007cb0de;
+  background: #937ff0;
   outline: none;
   border: 1px solid black;
   cursor: pointer;
