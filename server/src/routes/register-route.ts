@@ -15,7 +15,7 @@ registerRoute.get(`/register`, (_req, res) => {
 });
 registerRoute.post(`/register`, (req, res) => {
   console.log(req.body);
-  res.status(200).send(`Register page y`);
+  res.status(200).send({ success: true });
 });
 
 export default registerRoute;

@@ -8,9 +8,15 @@ export const templates = {
     justify-content: center;
   `,
 };
+export const fonts = {
+  font1: css`
+    font-family: "Reggae One", cursive;
+  `,
+};
 
 export const theme: DefaultTheme = {
   /* colors, */
   templates,
+  fonts,
   /* dimensions */
 };
