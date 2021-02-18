@@ -15,6 +15,12 @@ import { SubmitButton } from "../button/submit/styles";
 import { LoginTitle } from "../login/styles";
 import ValidationError from "../generic/error";
 import { TextInput } from "../generic/input/text";
+import Success from "../generic/succeess";
+import { boolean } from "yup/lib/locale";
+
+interface IRes {
+  response: undefined | boolean;
+}
 
 const Register = () => {
   const [state, setState] = useState({
@@ -24,34 +30,24 @@ const Register = () => {
     password: "",
     repeat_password: "",
   });
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const res = await axios
-      .post(`/register`, {
-        email: "vetal160199@gmail.com",
-        password: "password",
-      })
-      .then((data: AxiosResponse) => {
-        console.log(data);
-        return data;
-      });
-  };
+  const [res, setRes] = useState();
+  console.log(res);
 
   const sendData = async (data: typeof state) => {
     const response = await axios.post(`/register`, data).then((res) => {
       console.log(res.data);
       return res.data;
     });
+    setRes(response);
   };
-  /* useEffect(() => {
-    const res = axios.get(`/register`).then((data: AxiosResponse) => {
-      console.log(data);
-      setState(data.data);
-      return data;
-    });
-    return () => {};
-  }, []); */
+
+  const showResponse = (success: boolean) => {
+    return success ? (
+      <Success label="You have successfully registered!" />
+    ) : (
+      <ValidationError />
+    );
+  };
 
   return (
     <Wrapper>
@@ -164,13 +160,12 @@ const Register = () => {
             </Form>
           )}
         </Formik>
-
+        {res ? <Success label="Successfully" /> : <ValidationError />}
         <Circle size={150} top={55} left={65} color="#50d4fc" />
         <Circle size={60} top={28} left={48} color="#2fc8f7" />
         <Circle size={20} top={5} left={75} color="#50d4fc" />
         <TextLink href="/login">Already have one?Login here.</TextLink>
       </LoginCard>
-      <h1>{state.firstname}</h1>
     </Wrapper>
   );
 };

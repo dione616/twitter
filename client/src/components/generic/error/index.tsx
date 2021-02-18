@@ -2,11 +2,11 @@ import React, { ReactNode } from "react";
 import { Err } from "./styles";
 
 interface IProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const ValidationError = ({ children }: IProps) => {
-  return <Err>{children}</Err>;
+  return children ? <Err>{children}</Err> : <Err>Error!!!</Err>;
 };
 
 export default ValidationError;
