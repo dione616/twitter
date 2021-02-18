@@ -5,12 +5,28 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  box-sizing: border-box;
+  color: rgb(67, 67, 67);
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-h1 {
-  color: rgb(87, 87, 87);
+.input-field {
+  width: 97%;
+  display: block;
+  font-size: 18px;
+  margin: 20px 0;
+  border: 1px solid black;
+  background: #ffffff8c;
+}
+.waves {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  height: 10vw;
+  transform: scaleX(2.3);
 }
