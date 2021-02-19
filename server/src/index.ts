@@ -7,10 +7,17 @@ import loginRoute from "./routes/login-route";
 import registerRoute from "./routes/register-route";
 import mongoose from "mongoose";
 import { connectDatabase } from "./database";
+import session from "express-session";
 var bodyParser = require("body-parser");
 
-const DB_USER = "user_001";
-const DB_PASSWORD = "GB9lsFIYkMMr4tGF";
+declare module "express-session" {
+  export interface SessionData {
+    user: { [key: string]: any };
+  }
+  export interface Session {
+    user: { [key: string]: any };
+  }
+}
 
 const connect = connectDatabase();
 
@@ -23,21 +30,32 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
 
-app.use(cors({ origin: `http://localhost:3000`, optionsSuccessStatus: 200 }));
+app.use(
+  cors({
+    origin: `http://localhost:3000`,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 app.use(loginRoute);
 app.use(registerRoute);
 
-/* app.post(`/register`, (req, res) => {
-  console.log(req.body);
-  res.status(200).send(`Register page y`);
+app.get("/test", requireLogin, (req, res) => {
+  console.log(req.session);
+
+  res.status(200).send({ success: true, user: req.session.user });
 });
-app.get(`/register`, (req, res) => {
-  console.log(req.body);
-  res.status(200).send(`Register page y`);
-}); */
 
 const server = app.listen(PORT, () => {
   console.log(colors.blue(`[app]: http://localhost:${PORT}/`));

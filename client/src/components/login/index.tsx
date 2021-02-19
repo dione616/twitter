@@ -1,29 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginTitle, Wrapper, LoginCard, Circle, TextLink } from "./styles";
 import { SubmitButton } from "../button/submit/styles";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import ValidationError from "../generic/error";
+import { Redirect } from "react-router-dom";
+import { LoginResponse } from "../../lib/types";
+import { Err } from "../generic/error/styles";
 
 const Login = () => {
-  const [state] = useState({
+  const [state, setState] = useState({
     email: "",
     password: "",
+    errors: false,
   });
-  const [, setRes] = useState();
+  const [res, setRes] = useState<LoginResponse | null>(null);
+  console.log(res);
+
+  useEffect(() => {
+    return () => {
+      setState({ email: "", password: "", errors: false });
+    };
+  }, []);
 
   const sendData = async (data: typeof state) => {
     const response = await axios.post(`/login`, data).then((res) => {
-      console.log(res.data);
+      console.log(res);
+      setState((prev) => {
+        return { ...prev, errors: true };
+      });
+      setTimeout(() => {
+        setState((prev) => {
+          return { ...prev, errors: false };
+        });
+      }, 3000);
       return res.data;
     });
     setRes(response);
   };
 
+  const loginRedirect = () => {
+    if (res && res.user) {
+      return <Redirect to="/" />;
+    }
+  };
+
   return (
     <Wrapper>
       <LoginCard>
+        {loginRedirect()}
         <LoginTitle>Login</LoginTitle>
         <Formik
           initialValues={state}
@@ -36,9 +62,7 @@ const Login = () => {
               .max(25, "Max 25 chars")
               .required("Required"),
           })}
-          onSubmit={(values, actions) => {
-            console.log(values, actions);
-
+          onSubmit={(values) => {
             sendData(values);
           }}
         >
@@ -77,11 +101,11 @@ const Login = () => {
             </Form>
           )}
         </Formik>
-        {/* {res ? <Success label="Successfully" /> : <ValidationError />} */}
         <Circle size={150} top={55} left={65} color="#007cb0de" />
         <Circle size={60} top={28} left={48} color="#007cb0de" />
         <Circle size={20} top={5} left={75} color="#007cb0de" />
         <TextLink href="/register">Need an account? Register here.</TextLink>
+        {state.errors ? <Err>Error</Err> : null}
       </LoginCard>
     </Wrapper>
   );

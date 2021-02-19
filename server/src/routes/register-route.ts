@@ -19,7 +19,6 @@ registerRoute.get(`/register`, (_req, res) => {
 });
 
 registerRoute.post(`/register`, async (req, res) => {
-  console.log(req.body);
   const firstname = req.body.firstname.trim();
   const lastname = req.body.lastname.trim();
   const email = req.body.email.trim();
@@ -33,8 +32,6 @@ registerRoute.post(`/register`, async (req, res) => {
         .status(200)
         .send({ success: false, error: "Something wrong with DB" });
     });
-
-    let createdUser;
 
     if (user) {
       if (user.email === email) {
@@ -61,6 +58,10 @@ registerRoute.post(`/register`, async (req, res) => {
       console.log(token);
 
       const dbResponse = await User.create(userToCreate).then((user) => {
+        req.session.user = user;
+        req.session.cookie.maxAge = 3 * 24 * 60 * 60 * 1000;
+        req.session.save();
+        console.log("req.session.user = user;", req.session);
         return user;
       });
 
