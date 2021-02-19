@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from "express";
+import session from "express-session";
 
-interface RequestExt extends Request {
-  user: string;
-}
-
-export const requireLogin = (req: any, res: Response, next: NextFunction) => {
-  if (req && req.user) {
+export const requireLogin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log("HERE0", req.session);
+  if (req.session.user) {
+    console.log("HERE1");
     return next();
   } else {
-    return res.redirect(`/list`);
+    console.log("HERE2");
   }
 };

@@ -5,9 +5,14 @@ export interface User extends Document {
   firstname: string;
   lastname: string;
   email: string;
-  password: string;
+  token: string;
 }
 
 export interface Database {
   users: Collection<User>;
+}
+export interface IDecoded {
+  email: string;
+  password: string;
+  iat: number;
 }

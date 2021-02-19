@@ -1,23 +1,48 @@
+import jwt from "jsonwebtoken";
+import bodyParser from "body-parser";
 import express from "express";
+import { User } from "../schemas/UserSchema";
+import { IDecoded } from "../lib/types";
+
+const app = express();
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+interface DecodedData {
+  password: string;
+  email: string;
+}
 
 const loginRoute = express.Router();
 
 loginRoute.get("/home", (_req, res) => {
   res.status(200).send(`Home page1`);
 });
-loginRoute.get("/login", (_req, res) => {
-  res.status(200).send(`Home page1`);
-});
-loginRoute.post("/login", (req, res) => {
-  const email = req.body.email.trim();
-  const password = req.body.password.trim();
-
+loginRoute.post("/login", async (req, res) => {
   console.log(req.body);
 
-  if (email && password) {
-    res.status(200).send({ success: true });
+  if (req.body.email && req.body.password) {
+    const user = await User.findOne({ email: req.body.email }).catch((err) => {
+      console.log(err);
+      res.status(200).send(err);
+    });
+
+    if (user) {
+      const decoded = jwt.verify(user.token, `${process.env.TOKEN_SECRET}`);
+      const decodedPassword = (<DecodedData>decoded).password;
+      if (decodedPassword === req.body.password) {
+        req.session.user = user;
+        return res.status(200).send({ success: true, user });
+      }
+      res
+        .status(200)
+        .send({ success: false, error: "Wrong login credentials!" });
+    }
   } else {
-    res.status(200).send({ success: false });
+    res.status(200).send({ success: false, error: "Not valid data" });
   }
 });
 
