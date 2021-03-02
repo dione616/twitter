@@ -46,10 +46,7 @@ registerRoute.post(`/register`, async (req, res) => {
       const userToCreate = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email:
-          req.body.email /* ,
-        
-        password: req.body.password, */,
+        email: req.body.email,
         token,
       };
 

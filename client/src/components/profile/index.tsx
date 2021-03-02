@@ -1,5 +1,14 @@
+import { Wrapper } from "./styles";
+import Info from "./info";
+import AddTwitt from "../twitt/add-twitt";
+
 const Profile = () => {
-  return <h1>Profile</h1>;
+  return (
+    <Wrapper>
+      <Info />
+      <AddTwitt />
+    </Wrapper>
+  );
 };
 
 export default Profile;

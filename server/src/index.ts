@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import { requireLogin } from "./middleware";
 import loginRoute from "./routes/login-route";
 import registerRoute from "./routes/register-route";
-import mongoose from "mongoose";
 import { connectDatabase } from "./database";
 import session from "express-session";
 var bodyParser = require("body-parser");

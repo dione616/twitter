@@ -1,13 +1,10 @@
-import { useState } from "react";
+import { ContentWrapper } from "../generic/wrapper/styles";
 
 const Home = () => {
-  const [state] = useState("Hello World");
-
   return (
-    <div>
+    <ContentWrapper>
       <h1>Home</h1>
-      <h3>{state}</h3>
-    </div>
+    </ContentWrapper>
   );
 };
 
