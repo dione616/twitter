@@ -37,12 +37,12 @@ loginRoute.post("/login", async (req, res) => {
         req.session.user = user;
         return res.status(200).send({ success: true, user });
       }
-      res
-        .status(200)
-        .send({ success: false, error: "Wrong login credentials!" });
+      res.send({ success: false, error: "Wrong login credentials!" });
+    } else {
+      res.send({ success: false, error: "Wrong email credentials!" });
     }
   } else {
-    res.status(200).send({ success: false, error: "Not valid data" });
+    res.send({ success: false, error: "Not valid data" });
   }
 });
 

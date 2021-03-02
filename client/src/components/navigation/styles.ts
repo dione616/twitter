@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const NavWrapper = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0px;
   width: 100vw;
   background: white;
@@ -10,6 +10,8 @@ export const NavWrapper = styled.div`
   justify-content: flex-end;
   background: linear-gradient(90deg, #937ff0, #fc84ba);
   color: white;
+  z-index: 3;
+
   ${({ theme }) => theme.fonts.font1};
 
   & > a {
