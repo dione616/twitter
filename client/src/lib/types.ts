@@ -12,4 +12,23 @@ export interface User {
   updatedAt: string;
   __v: number;
   _id: string;
+  img?: string;
+}
+
+export interface IState {
+  user: User | null;
+}
+
+export interface Twitt {
+  _id: string;
+  text: string;
+  author: string;
+  likes: number;
+  comments: Comment[];
+}
+export interface Comment {
+  _id: string;
+  text: string;
+  author: string;
+  likes: number;
 }

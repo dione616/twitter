@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  ${({ theme }) => theme.templates.centerContent};
-  z-index: 2;
-
-  box-sizing: border-box;
-`;
 export const LoginCard = styled.div`
   ${({ theme }) => theme.templates.centerContent};
   padding: 20px;

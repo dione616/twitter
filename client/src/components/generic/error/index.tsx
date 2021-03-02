@@ -1,12 +1,12 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { Err } from "./styles";
 
 interface IProps {
-  children?: ReactNode;
+  text?: string;
 }
 
-const ValidationError = ({ children }: IProps) => {
-  return children ? <Err>{children}</Err> : <Err>Error!!!</Err>;
+const ValidationError = ({ text }: IProps) => {
+  return text ? <Err>{text}</Err> : <Err>Error!!!</Err>;
 };
 
 export default ValidationError;

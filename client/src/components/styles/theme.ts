@@ -7,6 +7,15 @@ export const templates = {
     align-items: center;
     justify-content: center;
   `,
+  directionRow: css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `,
+  justifyLeft: css`
+    display: flex;
+    justify-content: flex-end;
+  `,
 };
 export const fonts = {
   font1: css`
