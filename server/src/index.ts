@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { requireLogin } from "./middleware";
 import loginRoute from "./routes/login-route";
+import api from "./routes/index";
 import registerRoute from "./routes/register-route";
 import { connectDatabase } from "./database";
 import session from "express-session";
@@ -11,10 +12,10 @@ var bodyParser = require("body-parser");
 
 declare module "express-session" {
   export interface SessionData {
-    user: { [key: string]: any };
+    user: { [key: string]: any } | null;
   }
   export interface Session {
-    user: { [key: string]: any };
+    user: { [key: string]: any } | null;
   }
 }
 
@@ -47,15 +48,18 @@ app.use(
 );
 app.use(cookieParser());
 
+app.use("/api", api);
 app.use(loginRoute);
 app.use(registerRoute);
 
 app.get("/test", requireLogin, (req, res) => {
   console.log(req.session);
 
-  res.status(200).send({ success: true, user: req.session.user });
+  return res.status(200).send({ success: true, user: req.session.user });
 });
 
 const server = app.listen(PORT, () => {
   console.log(colors.blue(`[app]: http://localhost:${PORT}/`));
 });
+
+//TODO:onLogout clear req.session.user=null

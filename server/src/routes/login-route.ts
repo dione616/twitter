@@ -3,11 +3,21 @@ import bodyParser from "body-parser";
 import express from "express";
 import { User } from "../schemas/UserSchema";
 import { IDecoded } from "../lib/types";
+import session from "express-session";
 
 const app = express();
 app.use(
   bodyParser.urlencoded({
     extended: true,
+  })
+);
+
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: false,
+    cookie: { secure: false },
   })
 );
 
@@ -17,10 +27,6 @@ interface DecodedData {
 }
 
 const loginRoute = express.Router();
-
-loginRoute.get("/home", (_req, res) => {
-  res.status(200).send(`Home page1`);
-});
 loginRoute.post("/login", async (req, res) => {
   console.log(req.body);
 
@@ -35,6 +41,8 @@ loginRoute.post("/login", async (req, res) => {
       const decodedPassword = (<DecodedData>decoded).password;
       if (decodedPassword === req.body.password) {
         req.session.user = user;
+        console.log("1 ", req.session.user);
+
         return res.status(200).send({ success: true, user });
       }
       res.send({ success: false, error: "Wrong login credentials!" });
@@ -46,8 +54,9 @@ loginRoute.post("/login", async (req, res) => {
   }
 });
 
-/* loginRoute.get("/list", (_req, res) => {
-  res.status(200).send(`List page1`);
-}); */
+loginRoute.post("/logout", (req, res) => {
+  req.session.user = null;
+  res.send({ logout: true });
+});
 
 export default loginRoute;

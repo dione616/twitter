@@ -15,17 +15,21 @@ export interface User {
   img?: string;
 }
 
-export interface IState {
+export interface AuthState {
   user: User | null;
 }
-
 export interface Twitt {
   _id: string;
-  text: string;
+  content: string;
   author: string;
-  likes: number;
-  comments: Comment[];
+  createdAt: string;
+  updatedAt: string;
 }
+
+export interface TwittsState {
+  twitts: Twitt[];
+}
+
 export interface Comment {
   _id: string;
   text: string;

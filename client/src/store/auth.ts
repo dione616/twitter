@@ -1,5 +1,5 @@
 import { RootState } from "./index";
-import { IState } from "./../lib/types";
+import { AuthState } from "./../lib/types";
 import axios from "axios";
 import { Action, Reducer } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -28,6 +28,8 @@ const REGISTER_REQUEST = "auth/register_request";
 const REGISTER_SUCCESS = "auth/register_success";
 const REGISTER_FAILURE = "auth/register_failuer";
 const LOGOUT = "auth/logout";
+const LOGOUT_SUCCESS = "auth/logout_success";
+const LOGOUT_FAILURE = "auth/logout_failure";
 
 interface AuthRequest extends Action<typeof AUTH_REQUEST> {}
 interface AuthSuccess extends Action<typeof AUTH_SUCCESS> {
@@ -66,6 +68,16 @@ interface SetUserFailure extends Action<typeof SET_USER_FAILURE> {
 }
 
 interface Logout extends Action<typeof LOGOUT> {}
+interface LogoutSuccess extends Action<typeof LOGOUT_SUCCESS> {
+  payload: {
+    success: boolean;
+  };
+}
+interface LogoutFailure extends Action<typeof LOGOUT_FAILURE> {
+  payload: {
+    success: boolean;
+  };
+}
 
 export const setUser = (): ThunkAction<
   Promise<void>,
@@ -137,10 +149,31 @@ export const register = (data: {
   }
 };
 
-export const logout = (): Logout => {
-  localStorage.removeItem("user");
-  return { type: LOGOUT };
+export const logout = (): ThunkAction<
+  Promise<void>,
+  RootState,
+  undefined,
+  Logout | LogoutSuccess | LogoutFailure
+> => async (dispatch) => {
+  dispatch({ type: LOGOUT });
+
+  try {
+    localStorage.removeItem("user");
+    const response = await axios.post("/logout").then((res) => res.data);
+    console.log("LOut: ", response);
+    dispatch({ type: LOGOUT_SUCCESS, payload: { success: true } });
+  } catch (error) {
+    dispatch({ type: LOGOUT_FAILURE, payload: { success: false } });
+  }
 };
+
+/* export const logout = async (): Promise<Logout> => {
+  localStorage.removeItem("user");
+  const response = await axios.post("/logout").then((res) => res.data);
+  console.log("LOut: ", response);
+
+  return { type: LOGOUT };
+}; */
 
 export const authSelector = (rootState: RootState) => {
   return rootState.authReducer;
@@ -152,7 +185,7 @@ export const selectAuth = (rootState: RootState) => {
 };
 
 export const authReducer: Reducer<
-  IState,
+  AuthState,
   | AuthSuccess
   | AuthFailure
   | RegisterSuccess

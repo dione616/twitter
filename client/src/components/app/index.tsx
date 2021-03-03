@@ -9,9 +9,25 @@ import Register from "../register";
 import Sidebar from "../sidebar";
 import { AppWrapper } from "./styles";
 import { setUser } from "../../store/auth";
-import { useDispatch } from "react-redux";
+import { loadTwitts } from "../../store/twitt";
+import { connect, ConnectedProps, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { selectTwitts } from "../../store/twitt";
 
-const App = () => {
+const mapState = (state: RootState) => {
+  return {
+    twitts: selectTwitts(state),
+  };
+};
+
+const connector = connect(mapState, { loadTwitts });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+interface Props extends PropsFromRedux {}
+
+const App: React.FC<Props> = ({ twitts, loadTwitts }) => {
+  console.log("T:", twitts);
+
   const dispatch = useDispatch();
   useEffect(() => {
     console.log("set");
@@ -25,7 +41,12 @@ const App = () => {
       <Content>
         <Switch>
           <Route exact path='/' render={() => <Home />} />
-          <Route path='/profile' render={() => <Profile />} />
+          <Route
+            path='/profile'
+            render={() => (
+              <Profile twitts={twitts.twitts} loadTwitts={loadTwitts} />
+            )}
+          />
           <Route path='/login' render={() => <Login />} />
           <Route path='/register' render={() => <Register />} />
         </Switch>
@@ -34,4 +55,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connector(App);

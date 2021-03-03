@@ -8,7 +8,7 @@ body {
 
   box-sizing: border-box;
   color: rgb(255, 255, 255);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 code {

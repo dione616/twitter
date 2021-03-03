@@ -1,30 +1,24 @@
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { RootState } from "../../store";
 import { createTwitt } from "../../store/twitt";
 import * as Yup from "yup";
 import ValidationError from "../generic/error";
 import { SubmitButton } from "../button/submit/styles";
 import { Wrapper } from "../generic/wrapper/styles";
 
-const mapState = (state: RootState) => {
-  return {
-    twitts: state.twittReducer.twitts,
-  };
-};
-
-const connector = connect(mapState, { createTwitt });
+const connector = connect(null, { createTwitt });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface Props extends PropsFromRedux {}
 
-const AddTwitt: React.FC<Props> = ({ twitts, createTwitt }) => {
-  console.log("TWITTS:", twitts);
+const AddTwitt: React.FC<Props> = ({ createTwitt }) => {
   const [state] = useState({ text: "" });
 
   const sendTwitt = (text: string) => {
-    createTwitt(text);
+    if (text.trim()) {
+      createTwitt(text.trim());
+    }
   };
   return (
     <Wrapper>
@@ -42,14 +36,16 @@ const AddTwitt: React.FC<Props> = ({ twitts, createTwitt }) => {
           sendTwitt(values.text);
         }}
       >
-        {({ errors }) => (
-          <Form style={{ width: "100%", zIndex: 2 }}>
+        {({ errors, values }) => (
+          <Form>
             <Field
               placeholder='Type your twitt'
               className='input-field'
               name='text'
             />
-            {errors.text ? <ValidationError text={errors.text} /> : null}
+            {errors.text || !values.text.trim() ? (
+              <ValidationError text={errors.text} />
+            ) : null}
 
             <SubmitButton disabled={errors.text ? true : false} type='submit'>
               Submit

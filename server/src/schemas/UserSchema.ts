@@ -40,12 +40,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    /* password: {
-      type: String,
-      required: true,
-      minLength: 6,
-      maxLength: 100,
-    }, */
     avatar: {
       type: String,
     },
