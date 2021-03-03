@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div``;
+
+export const WrapperCenter = styled.div`
   ${({ theme }) => theme.templates.centerContent};
   z-index: 2;
 

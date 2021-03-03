@@ -4,6 +4,7 @@ import { selectAuth } from "../../../store/auth";
 import Avatar from "./avatar";
 import ProfileData from "./data";
 import { logout } from "../../../store/auth";
+import { Wrapper } from "./styles";
 
 const mapState = (state: RootState) => {
   return {
@@ -18,11 +19,12 @@ interface Props extends PropsFromRedux {}
 
 const ProfileInfo: React.FC<Props> = ({ auth, logout }) => {
   return (
-    <div style={{ minHeight: "250px" }}>
+    <Wrapper>
       {auth.user?.img && <Avatar img={auth.user.img} />}
+      {auth.user && auth.user.img ? <Avatar img={auth.user.img} /> : <Avatar />}
       <ProfileData />
       <button onClick={() => logout()}>Logout</button>
-    </div>
+    </Wrapper>
   );
 };
 
