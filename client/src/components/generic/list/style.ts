@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
+export const UlList = styled.ul`
   z-index: 2;
   list-style-type: none;
 `;

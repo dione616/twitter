@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Twitt } from "../../lib/types";
 import { Wrapper } from "../generic/wrapper/styles";
+import { UlList } from "../generic/list/style";
 
 interface Props {
   twitts: Twitt[];
@@ -16,8 +17,18 @@ const List: React.FC<Props> = ({ twitts, loadTwitts }) => {
     twitts.map((twitt) => {
       return (
         <li key={twitt._id}>
-          <div>AVATAR</div>
-          <div>{twitt.author}</div>
+          <img
+            style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+            src={
+              twitt.author.img
+                ? twitt.author.img
+                : "https://iconape.com/wp-content/png_logo_vector/avatar-4.png"
+            }
+            alt='avatar post'
+          />
+          <div>
+            {twitt.author.firstname} {twitt.author.lastname}
+          </div>
           <div>{twitt.content}</div>
           <div>{twitt.updatedAt}</div>
         </li>
@@ -29,10 +40,7 @@ const List: React.FC<Props> = ({ twitts, loadTwitts }) => {
 
   return (
     <Wrapper>
-      <ul>
-        <li>Twitt #1 - {twitts[0].content} - here</li>
-        {mapTwitts}
-      </ul>
+      <UlList>{mapTwitts}</UlList>
     </Wrapper>
   );
 };

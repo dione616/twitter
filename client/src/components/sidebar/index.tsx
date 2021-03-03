@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Li, List } from "../generic/list/style";
+import { Li, UlList } from "../generic/list/style";
 import { Wrapper } from "./styles";
 
 const Sidebar = () => {
   return (
     <Wrapper>
-      <List>
+      <UlList>
         <Li>
           <Link to='/'>
             <i className='fas fa-dove'></i>
@@ -41,7 +41,7 @@ const Sidebar = () => {
             <i className='fas fa-sign-out-alt'></i>
           </Link>
         </Li>
-      </List>
+      </UlList>
     </Wrapper>
   );
 };

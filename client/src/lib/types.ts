@@ -21,7 +21,7 @@ export interface AuthState {
 export interface Twitt {
   _id: string;
   content: string;
-  author: string;
+  author: User;
   createdAt: string;
   updatedAt: string;
 }

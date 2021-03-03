@@ -15,7 +15,9 @@ app.use(
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const twitts = await Twitt.find({}).then((twitts) => twitts);
+  const twitts = await Twitt.find({})
+    .populate("author")
+    .then((twitts) => twitts);
   console.log(twitts);
 
   res.status(200).send({ twitts });
@@ -30,11 +32,12 @@ router.post("/", (req, res) => {
   console.log("SEssion:", req.session.user);
 
   if (req.session.user) {
-    const twittData = { content: req.body.text, author: req.session.user._id };
+    const twittData = { content: req.body.text, author: req.session.user };
+    console.log("WITH SES: ", twittData);
 
     Twitt.create(twittData)
       .then(async (newTwitt) => {
-        /* newTwitt = await User.populate(newTwitt, { path: "author" }); */
+        newTwitt = await User.populate(newTwitt, { path: "author" });
         console.log("TW from DB: ", newTwitt);
 
         res.status(201).send({ error: false, twitt: newTwitt });

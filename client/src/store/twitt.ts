@@ -84,7 +84,16 @@ const initialState = {
     {
       _id: "",
       content: "",
-      author: "",
+      author: {
+        _id: "",
+        createdAt: "",
+        email: "",
+        firstname: "",
+        lastname: "",
+        token: "",
+        updatedAt: "",
+        __v: 0,
+      },
       createdAt: "",
       updatedAt: "",
     },
