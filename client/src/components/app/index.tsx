@@ -7,7 +7,6 @@ import Login from "../login";
 import Profile from "../profile";
 import Register from "../register";
 import Sidebar from "../sidebar";
-import Tweets from "../tweets";
 import { AppWrapper } from "./styles";
 import { setUser } from "../../store/auth";
 import { useDispatch } from "react-redux";
@@ -27,7 +26,6 @@ const App = () => {
         <Switch>
           <Route exact path='/' render={() => <Home />} />
           <Route path='/profile' render={() => <Profile />} />
-          <Route path='/tweets' render={() => <Tweets />} />
           <Route path='/login' render={() => <Login />} />
           <Route path='/register' render={() => <Register />} />
         </Switch>

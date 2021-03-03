@@ -1,6 +1,10 @@
 import { Image } from "./styles";
 
-const Avatar = ({ img }: { img: string }) => {
+interface Props {
+  img?: string;
+}
+
+const Avatar: React.FC<Props> = ({ img }) => {
   return (
     <>
       <Image src={img} />

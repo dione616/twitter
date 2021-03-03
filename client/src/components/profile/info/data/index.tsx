@@ -1,6 +1,8 @@
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../../../store";
 import { selectAuth } from "../../../../store/auth";
+import { Text, TitleMedium } from "../../../generic/typography/styles";
+import { Wrapper } from "./styles";
 
 const mapState = (state: RootState) => {
   return {
@@ -15,17 +17,17 @@ interface Props extends PropsFromRedux {}
 
 const ProfileData: React.FC<Props> = ({ auth }) => {
   return (
-    <div>
-      <h3>
+    <Wrapper>
+      <TitleMedium>
         {auth.user?.firstname} {auth.user?.lastname}
-      </h3>
-      <div>My status is awesome YO!</div>
-      <div>City: Sumy</div>
-      <div>Country: Ukraine</div>
-      <div>
+      </TitleMedium>
+      <Text>My status is awesome YO!</Text>
+      <Text>City: Sumy</Text>
+      <Text>Country: Ukraine</Text>
+      <Text>
         Since:{new Date(`${auth.user?.createdAt}`).toLocaleDateString()}
-      </div>
-    </div>
+      </Text>
+    </Wrapper>
   );
 };
 

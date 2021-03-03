@@ -6,6 +6,7 @@ import { createTwitt } from "../../store/twitt";
 import * as Yup from "yup";
 import ValidationError from "../generic/error";
 import { SubmitButton } from "../button/submit/styles";
+import { Wrapper } from "../generic/wrapper/styles";
 
 const mapState = (state: RootState) => {
   return {
@@ -26,7 +27,7 @@ const AddTwitt: React.FC<Props> = ({ twitts, createTwitt }) => {
     createTwitt(text);
   };
   return (
-    <div>
+    <Wrapper>
       <h2>Post new Twitt</h2>
 
       <Formik
@@ -44,9 +45,9 @@ const AddTwitt: React.FC<Props> = ({ twitts, createTwitt }) => {
         {({ errors }) => (
           <Form style={{ width: "100%", zIndex: 2 }}>
             <Field
-              placeholder='Firstname'
+              placeholder='Type your twitt'
               className='input-field'
-              name='firstname'
+              name='text'
             />
             {errors.text ? <ValidationError text={errors.text} /> : null}
 
@@ -56,7 +57,7 @@ const AddTwitt: React.FC<Props> = ({ twitts, createTwitt }) => {
           </Form>
         )}
       </Formik>
-    </div>
+    </Wrapper>
   );
 };
 
